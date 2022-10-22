@@ -1,0 +1,53 @@
+stages:
+  - build
+  - test
+  - deploy1
+  - deploy2
+
+default:
+  image: python:latest
+
+build_numbers:
+  stage: build
+  rules:
+    - exists:
+        - input.txt
+  inherit:
+    default: true
+  script:
+    - python build.py
+  artifacts:
+    paths:
+      - output.txt
+
+test_numbers:
+  stage: test
+  needs:
+    - build_numbers
+  inherit:
+    default: true
+  script:
+    - python test.py
+
+deploy_numbers:
+  stage: deploy1
+  inherit:
+    default: true
+  script:
+    - python deploy.py
+  artifacts:
+    paths:
+      - output/
+
+pages:
+  stage: deploy2
+  needs:
+    - deploy_numbers
+  inherit:
+    default: true
+  script:
+    - mv output/ public/
+  artifacts:
+    paths:
+      - public
+    expire_in: 30 days
