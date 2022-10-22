@@ -1,0 +1,90 @@
+#1 Feladat - 2 pont
+Készíts el egy privát - publikus kulcspárt, az alábbi paraméterek szerint:
+
+    Típusa: Ed25519
+    Jelszó (passphrase) nem szükséges
+    Kommentben a saját neved legyen
+
+2 feladat - 2 pont
+Megfelelő kulcs feltöltése
+A cél egy Linux serverre történő authentikáció lesz.
+- Discord-on küldd el azt a szöveget (vagy file-t), amit feltöltenél az elérni kívánt authorized_keys file-ba
+- Várd meg a megerősítését a további feladatsorhoz
+- Feladatmegoldásként ide is töltsd fel a kulcspár megfelelő tagját
+----------------------------------------------------------------------------------------------
+Puttygen el lementünk egy Ed25519 kulcs párt a saját névre plusz 
+a publi-key -t discodra és a feladatba visszatöltjük
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+
+#2. feladat - 2 pont
+Jelentkezz be a serverre
+
+A megfelelő kulcsok használatával juss be a "Jump" serverre.
+A szükséges paraméterek:
+IP / FQDN: dt-devops-jump.westeurope.cloudapp.azure.com
+SSH Port: 2222
+user: devops-user
+----------------------------------------------------------------------------------------------
+Putty ban:
+Először puttygen-nel generálsz egy ed kulcspárt
+ha kész akkor a komment részt kitörlöd és a helyére a neved írod
+utána elmented a publikus és privát kulcsot
+ezt a privát kulcsot kell elküldeni dávidnak
+ha hozzáadta a szerverhez, akkor megnyitod a puttyot és devops-user@dt-devops-jump.westeurope.cloudapp.azure.com
+ezt írod ahova az ip ket szoktuk
+aztán mellé port:2222
+és még mielőtt le okéznád, baloldalt menj rá az SSH-ra, abból lenyílik pár menü és az AUTH-ra rámész
+és ott alul irja hogy privát kulcs feltöltése
+ott kiválasztod ugyanazt amit elküldtél dávidnak és leokézod
+----------------------------------------------------------------------------------------------
+2/2. feladat - 3 pont
+Itt jártam
+Fűzd hozzá a neved a home mappában található i.was.here file-hoz.
+Van ennek a file-nak valami érdekes tulajdonsága. Mi az?
+--ez egy olyan fájl ami olvasható és hozzáfűzhetek, nem törölhető
+----------------------------------------------------------------------------------------------
+akkor most bent vagy a jump szerveren
+most azt ird:
+echo "Nagy Balazs Zoltan" >> i.was.here
+ezzel hozzáfűzöd a neved a fájlhoz
+----------------------------------------------------------------------------------------------
+2/3. feladat - 6 pont
+Webserver elérése
+Ez a Linux-os gép egy hálózaton van egy webserverrel, 
+amit internet irányból nem lehet elérni, de "helyi hálózatról" igen. 
+A webserver IP címe: 172.30.0.5. 
+Hogyan érnéd el, hogy a saját böngésződben megjelenjen a webserver 
+nyitóoldala? Screenshot feltötésével igazold a feladat elvégzését. 
+(A saját böngésződben az alábbi oldalon kéne bejönnie a server nyitóoldalának: http://localhost:portszám)
+----------------------------------------------------------------------------------------------
+saját centos -terminálban be írod:
+ssh -L 8888:172.30.0.5:80 devops-user@dt-devops-jump.westeurope.cloudapp.azure.com -p 2222 -i private-new-nbalazs
+(private-new-nbalazs az új prite key mivel az alap generált kulcs nem működik, ezért, 
+vissza megyünk a Putty-gen -ez betöltjük a továbbított private kulcsot, áteszük Ed25519
+majd felül a Conversion fülnél az Export OpenSSH key (force new file format) kiválasztjuk
+és lementjük, be rakjuk a centos termináljába WinSCP-n keresztül, után beírjük a felül yrt kodót)
+
+elvileg:
+böngészőben->
+localhost:8888
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+#3 feladat:
+ Lehető legkevesebb kódsor írásával érd el, hogy megvalósuljon az alábbi mappa struktúra:
+ Ha ki szeretnéd próbálni a futó scriptet, akkor saját gépen dolgozz (virtualbox / centos)
+ Legyen egy fő mappád a mai dátummal;
+ Legyenek ebben a mappában számozott mappák, 1-től 5-ig;
+ A számozott mappákon belül legyenek betűjeles mappák, a-től g-ig.
+ Ha fel szeretnéd tölteni a scriptet vagy csak a kódot, mindkettőre van lehetőséged.
+------------------------------------------------------------------------------------
+sudo mkdir -p 2022-07-06/{1/{a,b,c,d,e,f,g},2/{a,b,c,d,e,f,g},3/{a,b,c,d,e,f,g},4/{a,b,c,d,e,f,g},5/{a,b,c,d,e,f,g}}
+mkdir -p 20220914/{1..5}/{a..g}
+mkdir -p /$(date +%Y%m%d)/{1..5}/{a..g}
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------
+
